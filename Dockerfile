@@ -8,11 +8,11 @@ RUN go mod download && go mod verify
 COPY . .
 RUN CGO_ENABLED=0 go build -o bin/hue2govee github.com/cedrickring/hue-to-govee/cmd/hue2govee
 
-FROM gcr.io/distroless/static
+FROM alpine
 
-WORKDIR /
+WORKDIR /app
 USER 10001:10001
 
-COPY --from=build /app/bin/hue2govee /hue2govee
+COPY --from=build /app/bin/hue2govee /app/hue2govee
 
-CMD ["/hue2govee"]
+CMD ["/app/hue2govee"]

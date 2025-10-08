@@ -40,6 +40,7 @@ log_level: "INFO"
 - **log_level**: Logging verbosity (`DEBUG`, `INFO`, `WARN`, `ERROR`)
 
 Refer to the Philips Hue documentation on how to retrieve the bridge ID and username: https://developers.meethue.com/develop/get-started-2/
+
 To get the Hue light and room ids, refer to the API documentation: https://developers.meethue.com/develop/hue-api-v2/
 
 ## Usage
