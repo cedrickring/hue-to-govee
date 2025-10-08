@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+ARCH=$(uname -m)
+case "$ARCH" in
+  x86_64|amd64)   ARCH="amd64";;
+  arm64|aarch64)  ARCH="arm64";;
+  *)
+  echo "Unsupported arch $ARCH"
+  exit 1
+  ;;
+esac
+
+OS=$(echo `uname`|tr '[:upper:]' '[:lower:]')
+
+EXECUTABLE_NAME="hue2govee-${OS}-${ARCH}"
+VERSION=$(curl -fsSl https://api.github.com/repos/cedrickring/hue-to-govee/releases/latest | curl -s https://api.github.com/repos/cedrickring/hue-to-govee/releases/latest | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
+
+echo "Downloading hue2govee version ${VERSION}"
+DOWNLOAD_URL="https://github.com/cedrickring/hue-to-govee/releases/download/${VERSION}/${EXECUTABLE_NAME}"
+
+sudo curl -fsSL $DOWNLOAD_URL -o /usr/local/bin/hue2govee
+sudo chmod +x /usr/local/bin/hue2govee
+
+echo "Downloaded hue2govee to /usr/local/bin/hue2govee"

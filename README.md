@@ -48,10 +48,19 @@ To get the Hue light and room ids, refer to the API documentation: https://devel
 ### Docker
 Use the following command to run `hue2govee` with docker:
 ```bash
-docker run -d --rm -v $(pwd)/config.yaml:/config.yaml <image>
+docker run -d --rm -v $(pwd)/config.yaml:/config.yaml ghcr.io/cedrickring/hue-to-govee:latest
 ```
 
 ### Local
+
+Download the latest release from the [releases page](https://github.com/josh-justjosh/hue2govee/releases).
+
+or 
+
+run the script:
+```bash
+curl -fSsl https://raw.githubusercontent.com/cedrickring/hue-to-govee/main/scripts/get | bash
+```
 
 1. Create your `config.yaml` file with the appropriate values
 2. Run the application:
