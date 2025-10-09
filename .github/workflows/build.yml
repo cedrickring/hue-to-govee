@@ -107,6 +107,7 @@ jobs:
             type=raw,value=latest
       - name: Build and push image
         uses: docker/build-push-action@v6
+        id: push
         with:
           push: true
           platforms: ${{ env.DOCKER_PLATFORMS }}
