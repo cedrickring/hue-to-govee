@@ -108,6 +108,9 @@ func startSynchronization(ctx context.Context, logger zerolog.Logger, hueClient 
 
 						r, g, b := hue.ColorToRGB(light)
 						bri := int(float64(light.Dimming.Brightness) / 254.0 * 100)
+						if sync.FixedBrightness != nil {
+							bri = *sync.FixedBrightness
+						}
 
 						if err := goveeClient.SetColor(syncCopy.GoveeDeviceId, r, g, b); err != nil {
 							if govee.IsDeviceNotFound(err) {
