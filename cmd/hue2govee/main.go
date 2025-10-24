@@ -106,7 +106,7 @@ func startSynchronization(ctx context.Context, logger zerolog.Logger, hueClient 
 							}
 						}
 
-						r, g, b := hue.ColorToRGB(light)
+						r, g, b := hue.ColorToRGB(light, sync.FixedBrightness)
 						bri := int(float64(light.Dimming.Brightness) / 254.0 * 100)
 						if sync.FixedBrightness != nil {
 							bri = *sync.FixedBrightness

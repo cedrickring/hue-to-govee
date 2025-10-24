@@ -31,29 +31,33 @@ var (
 )
 
 // ColorToRGB converts a Light to RGB with gamut correction
-func ColorToRGB(light *Light) (int, int, int) {
+func ColorToRGB(light *Light, fixedBrightness *int) (int, int, int) {
 	if !light.On.On {
 		return 0, 0, 0
 	}
 
-	brightness := light.Dimming.Brightness
+	brightness := int(light.Dimming.Brightness)
+	if fixedBrightness != nil {
+		brightness = *fixedBrightness
+	}
+
 	if light.ColorTemperature.MirekValid {
 		// CT is in mireds, convert to Kelvin: 1000000/CT
 		kelvin := 1000000 / light.ColorTemperature.Mirek
-		return ctToRGB(kelvin, int(brightness))
+		return ctToRGB(kelvin, brightness)
 	}
 
 	if light.Color.XY.X != 0 || light.Color.XY.Y != 0 {
 		return coordsToRGB(
 			light.Color.XY.X,
 			light.Color.XY.Y,
-			int(brightness),
+			brightness,
 			light.Color.GamutType,
 			light.Color.Gamut,
 		)
 	}
 
-	brightnessValue := int(brightness * 255 / 100)
+	brightnessValue := brightness * 255 / 100
 	return brightnessValue, brightnessValue, brightnessValue
 }
 
